@@ -1,0 +1,5 @@
+.vscode
+*.png
+
+data
+saved_models
