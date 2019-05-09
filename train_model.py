@@ -46,22 +46,22 @@ def train(_data_file, _model_name):
 
     print("Predicted coefficient of determination for ", _model_name, " : ", coeff)
 
-    # save the trained model, so check if saved folder exists 
+    # save the trained model, so check if saved folder exists
     if not os.path.exists(cfg.saved_models_folder):
         os.makedirs(cfg.saved_models_folder)
 
     # compute model filename
-    model_filename = _data_file.split('/')[-1].replace(cfg.output_file_prefix, '').replace('.csv', '') 
+    model_filename = _data_file.split('/')[-1].replace(cfg.output_file_prefix, '').replace('.csv', '')
     model_filename = model_filename + '_' + _model_name + '.joblib'
 
     model_file_path = os.path.join(cfg.saved_models_folder, model_filename)
     print("Model will be save into `", model_file_path, '`')
-    
+
     dump(clf, model_file_path)
 
     # save score into global_result.csv file
-    with open(cfg.global_result_filepath, "w") as f:
-       f.write(model_filename + ';' + str(coeff) + ';\n')
+    with open(cfg.global_result_filepath, "a") as f:
+       f.write(model_filename.replace('.joblib', '') + ';' + str(len(y)) + ';' + str(coeff) + ';\n')
 
 def main():
 
@@ -69,7 +69,7 @@ def main():
 
     parser.add_argument('--data', type=str, help='Filename of dataset')
     parser.add_argument('--model', type=str, help='Kind of model expected', choices=cfg.kind_of_models)
-    
+
     args = parser.parse_args()
 
     param_data_file = args.data

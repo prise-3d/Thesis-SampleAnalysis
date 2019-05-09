@@ -9,9 +9,9 @@ def compute_files(_n, _each_row, _each_column):
     """
     Read all folders and files of scenes in order to compute output dataset
     """
-    
+
     output_dataset_filename = cfg.output_file_prefix + _n + '_column_' + _each_column + '_row_' + _each_row + '.csv'
-    
+
     output_dataset_filename = os.path.join(cfg.output_data_folder, output_dataset_filename)
 
     if not os.path.exists(cfg.output_data_folder):
@@ -27,11 +27,11 @@ def compute_files(_n, _each_row, _each_column):
     scenes = [s for s in scenes if s not in cfg.folder_and_files_filtered]
     scenes = [s for s in scenes if '.csv' not in s] # do not keep generated .csv file
 
-    print(scenes)
+    # print(scenes)
 
     counter = 0
     number_of_elements = len(scenes) * cfg.number_of_rows * cfg.number_of_columns
-    print(number_of_elements, ' to manage')
+    #print(number_of_elements, ' to manage')
 
     for scene in scenes:
 
@@ -39,7 +39,7 @@ def compute_files(_n, _each_row, _each_column):
         columns_folder = os.listdir(scene_path)
 
         for id_column, column in enumerate(columns_folder):
-            
+
             if id_column % int(_each_column) == 0 :
 
                 folder_path = os.path.join(scene_path, column)
@@ -47,7 +47,7 @@ def compute_files(_n, _each_row, _each_column):
                 pixel_files_list = os.listdir(folder_path)
 
                 for id_row, pixel_file in enumerate(pixel_files_list):
-                    
+
                     if id_row % int(_each_row) == 0:
                         pixel_file_path = os.path.join(folder_path, pixel_file)
 
@@ -64,7 +64,7 @@ def compute_files(_n, _each_row, _each_column):
 
                             for val in pixel_values:
                                 saved_row += ';' + str(val)
-                            
+
                             saved_row += '\n'
 
                         # store mean and pixel values into .csv row
