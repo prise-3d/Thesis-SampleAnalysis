@@ -36,7 +36,7 @@ def reconstruct(_scene_name):
                 # predict the expected pixel value
                 lines = [float(l) for l in f.readlines()]
                 mean = sum(lines) / float(len(lines))
-                
+
             output_image[id_row, id_column] = mean
 
         print("{0:.2f}%".format(id_column / cfg.number_of_columns * 100))

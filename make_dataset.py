@@ -27,6 +27,9 @@ def compute_files(_n, _each_row, _each_column):
     scenes = [s for s in scenes if s not in cfg.folder_and_files_filtered]
     scenes = [s for s in scenes if '.csv' not in s] # do not keep generated .csv file
 
+    # skip test scene from dataset
+    scenes = [ s for s in scenes if s not in cfg.test_scenes]
+
     # print(scenes)
 
     counter = 0

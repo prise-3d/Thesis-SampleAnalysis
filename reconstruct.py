@@ -30,7 +30,7 @@ def reconstruct(_scene_name, _model_path, _n):
         folder_path = os.path.join(scene_path, str(id_column))
 
         pixels = []
-        
+
         for id_row in range(cfg.number_of_rows):
             
             pixel_filename = _scene_name + '_' + str(id_column) + '_' + str(id_row) + ".dat"
@@ -45,7 +45,12 @@ def reconstruct(_scene_name, _model_path, _n):
 
         # predict column pixels and fill image column by column
         pixels_predicted = clf.predict(pixels)
-        output_image[id_column] = pixels_predicted*255.
+
+        # change normalized predicted value to pixel value
+        pixels_predicted = pixels_predicted*255.
+
+        for id_pixel, pixel in enumerate(pixels_predicted):
+            output_image[id_pixel, id_column] = pixel
 
         print("{0:.2f}%".format(id_column / cfg.number_of_columns * 100))
         sys.stdout.write("\033[F")
