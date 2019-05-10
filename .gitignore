@@ -3,5 +3,6 @@
 
 data
 saved_models
+reconstructed
 
 __pycache__
