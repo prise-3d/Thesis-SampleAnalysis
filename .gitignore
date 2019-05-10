@@ -3,5 +3,8 @@
 
 data
 saved_models
+reconstructed
+
+models_info/models_comparisons.csv
 
 __pycache__

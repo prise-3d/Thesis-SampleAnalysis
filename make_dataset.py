@@ -27,6 +27,9 @@ def compute_files(_n, _each_row, _each_column):
     scenes = [s for s in scenes if s not in cfg.folder_and_files_filtered]
     scenes = [s for s in scenes if '.csv' not in s] # do not keep generated .csv file
 
+    # skip test scene from dataset
+    scenes = [ s for s in scenes if s not in cfg.test_scenes]
+
     # print(scenes)
 
     counter = 0
@@ -36,20 +39,19 @@ def compute_files(_n, _each_row, _each_column):
     for scene in scenes:
 
         scene_path = os.path.join(cfg.folder_scenes_path, scene)
-        columns_folder = os.listdir(scene_path)
 
-        for id_column, column in enumerate(columns_folder):
+        for id_column in range(cfg.number_of_columns):
 
             if id_column % int(_each_column) == 0 :
 
-                folder_path = os.path.join(scene_path, column)
-
-                pixel_files_list = os.listdir(folder_path)
-
-                for id_row, pixel_file in enumerate(pixel_files_list):
+                folder_path = os.path.join(scene_path, str(id_column))
+                
+                for id_row in range(cfg.number_of_rows):
 
                     if id_row % int(_each_row) == 0:
-                        pixel_file_path = os.path.join(folder_path, pixel_file)
+
+                        pixel_filename = scene + '_' + str(id_column) + '_' + str(id_row) + ".dat"
+                        pixel_file_path = os.path.join(folder_path, pixel_filename)
 
                         saved_row = ''
 

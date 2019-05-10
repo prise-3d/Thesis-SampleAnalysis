@@ -13,10 +13,10 @@ if [ "${erased}" == "Y" ]; then
     echo 'model_name; number_of_approximations; coeff_of_determination;' >> ${file_path}
 fi
 
-for n in {10,15,20,25,30}; do
+for n in {3,4,5,6,7,8,9,10,15,20,25,30}; do
     for model in {"SGD","Ridge","SVR"}; do
-        for row in {7,8,9,10}; do
-            for column in {7,8,9,10}; do
+        for row in {2,3,4,5,6,7,8,9,10}; do
+            for column in {2,3,4,5,6,7,8,9,10}; do
 
                 # Run creation of dataset and train model
                 DATASET_NAME="data/dataset_${n}_column_${column}_row_${row}.csv"
