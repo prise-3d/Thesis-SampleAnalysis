@@ -50,7 +50,7 @@ def train(_data_file, _model_name):
     if not os.path.exists(cfg.saved_models_folder):
         os.makedirs(cfg.saved_models_folder)
 
-    # compute model filename
+    # compute model filename_colum,n
     model_filename = _data_file.split('/')[-1].replace(cfg.output_file_prefix, '').replace('.csv', '')
     model_filename = model_filename + '_' + _model_name + '.joblib'
 

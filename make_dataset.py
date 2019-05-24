@@ -62,6 +62,8 @@ def compute_files(_n, _each_row, _each_column):
                             pixel_values = lines[0:int(_n)]
                             mean = sum(lines) / float(len(lines))
 
+
+                            # if mean != pixel_values[0]:
                             saved_row += str(mean)
 
                             for val in pixel_values:
