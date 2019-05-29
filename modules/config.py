@@ -13,6 +13,8 @@ number_of_columns               = 512
 kind_of_models                  = ["SGD", "Ridge", "SVR"]
 
 global_result_filepath          = "models_info/models_comparisons.csv"
+global_result_filepath_keras    = "models_info/models_comparisons_keras.csv"
+
 scenes_list                     = ['Exterieur01', 'Boulanger', 'CornellBoxNonVide', 'CornellBoxNonVideTextureArcade', 'CornellBoxVide', 'Bar1', 'CornellBoxNonVideTextureDegrade', 'CornellBoxNonVideTextureDamier', 'CornellBoxVideTextureDamier', 'CornellBoxNonVide', 'Sponza1', 'Bureau1_cam2']
 
 test_scenes                     = ['Sponza1']
