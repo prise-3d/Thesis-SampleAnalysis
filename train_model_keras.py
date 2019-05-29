@@ -25,14 +25,13 @@ def train(_data_file, _model_name):
 
     y = dataset[:,0]
     X = dataset[:,1:]
-    print(X.shape)
     _, nb_elem = X.shape
 
     y=np.reshape(y, (-1,1))
     scaler = MinMaxScaler()
 
-    print(scaler.fit(X))
-    print(scaler.fit(y))
+    scaler.fit(X)
+    scaler.fit(y)
     
     xscale=scaler.transform(X)
     yscale=scaler.transform(y)
@@ -55,16 +54,7 @@ def train(_data_file, _model_name):
     # Set expected metrics
     # TODO : add coefficients of determination as metric ? Or always use MSE/MAE
     model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
-    history = model.fit(X_train, y_train, epochs=150, batch_size=50,  verbose=1, validation_split=0.2)
-
-    # Save model 
-    print(history.history.keys())
-
-    y_predicted = model.predict(X_test)
-    len_shape, _ = y_predicted.shape
-    y_predicted = y_predicted.reshape(len_shape)
-
-    coeff = metrics.coefficient_of_determination(y_test, y_predicted)
+    history = model.fit(X_train, y_train, epochs=50, batch_size=50,  verbose=1, validation_split=0.2)
 
     # save the model into json/HDF5 file
     if not os.path.exists(cfg.saved_models_folder):
@@ -80,8 +70,8 @@ def train(_data_file, _model_name):
     model.save_weights(model_output_path.replace('.json', '.h5'))
 
     # save score into global_result.csv file
-    with open(cfg.global_result_filepath, "a") as f:
-       f.write(_model_name + ';' + str(len(y)) + ';' + str(coeff[0]) + ';\n')
+    # with open(cfg.global_result_filepath, "a") as f:
+    #   f.write(_model_name + ';' + str(len(y)) + ';' + str(coeff[0]) + ';\n')
 
 
     # Save plot info using model name
