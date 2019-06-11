@@ -31,3 +31,6 @@ python make_dataset.py --n 10 --each_row 8 --each_column 8
 python reconstruct.py --scene Scene1 --model_path saved_models/Model1.joblib --n 10 --image_name output.png
 ```
 
+## License
+
+[The MIT license](https://github.com/prise-3d/Thesis-SampleAnalysis/blob/master/LICENSE)
