@@ -51,7 +51,7 @@ def write_result(_scene_name, _data_file, _model_path, _n, _reconstructed_path, 
     if not os.path.exists(reference_image_path):
         # call sub process to create 'reference' img
         print("Creation of reference image : ", reference_image_path)
-        subprocess.run(["python", "reconstruct_scene_mean.py", "--scene", _scene_name, "--n", 1000, "--image_name", reference_image_path.split('/')[-1]])
+        subprocess.run(["python", "reconstruct_scene_mean.py", "--scene", _scene_name, "--n", str(1000), "--image_name", reference_image_path.split('/')[-1]])
 
 
     # load the trained model
