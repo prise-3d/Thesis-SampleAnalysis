@@ -9,12 +9,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
 import modules.config as cfg
-import modules.metrics as metrics
 
 from joblib import dump, load
 from PIL import Image
 
 import ipfml.iqa.fr as fr
+from ipfml import metrics
 
 
 n_samples_image_name_postfix = "_samples_mean.png"

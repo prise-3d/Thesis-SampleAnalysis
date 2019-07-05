@@ -1,10 +1,12 @@
 .vscode
 *.png
 
+dataset
 data
 saved_models
 reconstructed
+results
 
-models_info/models_comparisons.csv
+results/models_comparisons.csv
 
 __pycache__

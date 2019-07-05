@@ -4,13 +4,14 @@ import pandas as pd
 import os, sys, argparse
 
 import modules.config as cfg
+from modules.features import compute_feature
 
-def compute_files(_n, _each_row, _each_column):
+def compute_files(_n, _feature_choice, _each_row, _each_column):
     """
     Read all folders and files of scenes in order to compute output dataset
     """
 
-    output_dataset_filename = cfg.output_file_prefix + _n + '_column_' + _each_column + '_row_' + _each_row + '.csv'
+    output_dataset_filename = cfg.output_file_prefix + _feature_choice +'_' + _n + '_column_' + _each_column + '_row_' + _each_row + '.csv'
 
     output_dataset_filename = os.path.join(cfg.output_data_folder, output_dataset_filename)
 
@@ -66,7 +67,9 @@ def compute_files(_n, _each_row, _each_column):
                             # if mean != pixel_values[0]:
                             saved_row += str(mean)
 
-                            for val in pixel_values:
+                            data = compute_feature(_feature_choice, pixel_values)
+
+                            for val in data:
                                 saved_row += ';' + str(val)
 
                             saved_row += '\n'
@@ -89,15 +92,17 @@ def main():
     parser = argparse.ArgumentParser(description="Compute .csv dataset file")
 
     parser.add_argument('--n', type=str, help='Number of pixel values approximated to keep')
+    parser.add_argument('--feature', type=str, help='Feature choice to compute from samples', choices=cfg.features_list)
     parser.add_argument('--each_row', type=str, help='Keep only values from specific row', default=1)
     parser.add_argument('--each_column', type=str, help='Keep only values from specific column', default=1)
     args = parser.parse_args()
 
-    param_n = args.n
-    param_each_row = args.each_row
+    param_n           = args.n
+    param_feature     = args.feature
+    param_each_row    = args.each_row
     param_each_column = args.each_column
 
-    compute_files(param_n, param_each_row, param_each_column)
+    compute_files(param_n, param_feature, param_each_row, param_each_column)
 
 if __name__== "__main__":
     main()
