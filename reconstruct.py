@@ -8,13 +8,15 @@ from sklearn import svm
 from sklearn.utils import shuffle
 
 import modules.config as cfg
-import modules.metrics as metrics
+from modules.features import compute_feature
+
+from ipfml import metrics
 
 from joblib import dump, load
 
 from PIL import Image
 
-def reconstruct(_scene_name, _model_path, _n):
+def reconstruct(_scene_name, _model_path, _n, _feature_choice):
     
     # construct the empty output image
     output_image = np.empty([cfg.number_of_rows, cfg.number_of_columns])
@@ -41,7 +43,10 @@ def reconstruct(_scene_name, _model_path, _n):
                 # predict the expected pixel value
                 lines = [float(l)/255. for l in f.readlines()]
                 pixel_values = lines[0:int(_n)]
-                pixels.append(pixel_values)
+
+                data = compute_feature(_feature_choice, pixel_values)
+
+                pixels.append(data)
 
         # predict column pixels and fill image column by column
         pixels_predicted = clf.predict(pixels)
@@ -64,12 +69,14 @@ def main():
     parser.add_argument('--scene', type=str, help='Scene name to reconstruct', choices=cfg.scenes_list)
     parser.add_argument('--model_path', type=str, help='Model file path')
     parser.add_argument('--n', type=str, help='Number of pixel values approximated to keep')
+    parser.add_argument('--feature', type=str, help='Feature choice to compute from samples', choices=cfg.features_list)
     parser.add_argument('--image_name', type=str, help="The ouput image name")
 
     args = parser.parse_args()
 
     param_scene_name = args.scene
-    param_n = args.n
+    param_n          = args.n
+    param_feature    = args.feature
     param_model_path = args.model_path
     param_image_name = args.image_name
 
@@ -77,7 +84,7 @@ def main():
     if not param_n:
         param_n = param_model_path.split('_')[0]
 
-    output_image = reconstruct(param_scene_name, param_model_path, param_n)
+    output_image = reconstruct(param_scene_name, param_model_path, param_n, param_feature)
 
     if not os.path.exists(cfg.reconstructed_folder):
         os.makedirs(cfg.reconstructed_folder)
