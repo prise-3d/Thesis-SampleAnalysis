@@ -1,18 +1,22 @@
+# main imports
 import numpy as np
 import pandas as pd
-
 import os, sys, argparse
 
+# models imports
 from sklearn import linear_model
 from sklearn import svm
 from sklearn.utils import shuffle
-
-import modules.config as cfg
-import modules.metrics as metrics
-
 from joblib import dump, load
 
+# image processing imports 
 from PIL import Image
+
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
+
 
 def reconstruct(_scene_name, _n):
     
@@ -20,7 +24,7 @@ def reconstruct(_scene_name, _n):
     output_image = np.empty([cfg.number_of_rows, cfg.number_of_columns])
 
     # load scene and its `n` first pixel value data
-    scene_path = os.path.join(cfg.folder_scenes_path, _scene_name)
+    scene_path = os.path.join(cfg.dataset_path, _scene_name)
 
     for id_column in range(cfg.number_of_columns):
 

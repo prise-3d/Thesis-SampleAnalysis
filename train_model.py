@@ -1,16 +1,20 @@
+# main imports
 import numpy as np
 import pandas as pd
-
 import os, sys, argparse
 
+# model imports
 from sklearn import linear_model
 from sklearn import svm
 from sklearn.utils import shuffle
-
-import modules.config as cfg
-import modules.metrics as metrics
-
 from joblib import dump, load
+
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
+from ipfml import metrics
+
 
 def get_model_choice(_model_name):
     """

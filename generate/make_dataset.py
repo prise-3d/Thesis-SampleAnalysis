@@ -1,17 +1,20 @@
+# main imports
 import numpy as np
 import pandas as pd
-
 import os, sys, argparse
 
-import modules.config as cfg
-from modules.features import compute_feature
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
+from features import compute_feature
 
 def compute_files(_n, _feature_choice, _each_row, _each_column):
     """
     Read all folders and files of scenes in order to compute output dataset
     """
 
-    output_dataset_filename = cfg.output_file_prefix + _feature_choice +'_' + _n + '_column_' + _each_column + '_row_' + _each_row + '.csv'
+    output_dataset_filename = cfg.output_file_prefix + _n + '_' + _feature_choice + '_column_' + _each_column + '_row_' + _each_row + '.csv'
 
     output_dataset_filename = os.path.join(cfg.output_data_folder, output_dataset_filename)
 
@@ -22,7 +25,7 @@ def compute_files(_n, _feature_choice, _each_row, _each_column):
 
     print('Preparing to store data into ', output_dataset_filename)
 
-    scenes = os.listdir(cfg.folder_scenes_path)
+    scenes = os.listdir(cfg.dataset_path)
 
     # remove min max file from scenes folder
     scenes = [s for s in scenes if s not in cfg.folder_and_files_filtered]
@@ -39,7 +42,7 @@ def compute_files(_n, _feature_choice, _each_row, _each_column):
 
     for scene in scenes:
 
-        scene_path = os.path.join(cfg.folder_scenes_path, scene)
+        scene_path = os.path.join(cfg.dataset_path, scene)
 
         for id_column in range(cfg.number_of_columns):
 
