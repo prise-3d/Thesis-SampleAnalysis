@@ -33,4 +33,4 @@ python reconstruct.py --scene Scene1 --model_path saved_models/Model1.joblib --n
 
 ## License
 
-[The MIT license](https://github.com/prise-3d/Thesis-SampleAnalysis/blob/master/LICENSE)
+[The MIT license](LICENSE)

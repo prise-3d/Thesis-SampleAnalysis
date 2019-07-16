@@ -1,16 +1,21 @@
+# main imports
 import numpy as np
 import pandas as pd
 import json
 import os, sys, argparse
 
+# models imports
 from keras.models import model_from_json
-
-import modules.config as cfg
-from modules.features import compute_feature
-
 from joblib import dump, load
 
+# image processing imports
 from PIL import Image
+
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
+from features import compute_feature
 
 def reconstruct(_scene_name, _model_path, _n, _feature_choice):
     
@@ -28,7 +33,7 @@ def reconstruct(_scene_name, _model_path, _n, _feature_choice):
                     metrics=['accuracy'])
 
     # load scene and its `n` first pixel value data
-    scene_path = os.path.join(cfg.folder_scenes_path, _scene_name)
+    scene_path = os.path.join(cfg.dataset_path, _scene_name)
 
     for id_column in range(cfg.number_of_columns):
 

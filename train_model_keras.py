@@ -1,10 +1,12 @@
+# main imports
 import os, sys, argparse
 import numpy as np
 import json
 import matplotlib.pyplot as plt
+
+# model imports
 from joblib import dump
 import tensorflow as tf
-
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
@@ -15,8 +17,11 @@ from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasRegressor
 from keras import backend as K
 
-import modules.config as cfg
-import modules.metrics as metrics
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
+
 
 def train(_data_file, _model_name):
 
@@ -54,7 +59,7 @@ def train(_data_file, _model_name):
     # Set expected metrics
     # TODO : add coefficients of determination as metric ? Or always use MSE/MAE
     model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
-    history = model.fit(X_train, y_train, epochs=50, batch_size=50,  verbose=1, validation_split=0.2)
+    history = model.fit(X_train, y_train, epochs=cfg.keras_epochs, batch_size=50,  verbose=1, validation_split=0.2)
 
     # save the model into json/HDF5 file
     if not os.path.exists(cfg.saved_models_folder):
@@ -70,6 +75,9 @@ def train(_data_file, _model_name):
     model.save_weights(model_output_path.replace('.json', '.h5'))
 
     # save score into global_result.csv file
+    # if not os.path.exists(cfg.results_information_folder):
+    #    os.makedirs(cfg.results_information_folder)
+    #
     # with open(cfg.global_result_filepath, "a") as f:
     #   f.write(_model_name + ';' + str(len(y)) + ';' + str(coeff[0]) + ';\n')
 

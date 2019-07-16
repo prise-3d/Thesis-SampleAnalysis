@@ -1,21 +1,24 @@
+# main imports
 import numpy as np
 import pandas as pd
 import json
 import os, sys, argparse, subprocess
 
+# model imports
 from keras.models import model_from_json
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-
-import modules.config as cfg
-
 from joblib import dump, load
-from PIL import Image
 
+# image processing imports
+from PIL import Image
 import ipfml.iqa.fr as fr
 from ipfml import metrics
 
+# modules and config imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
 
 n_samples_image_name_postfix = "_samples_mean.png"
 reference_image_name_postfix = "_1000_samples_mean.png"
@@ -46,12 +49,12 @@ def write_result(_scene_name, _data_file, _model_path, _n, _reconstructed_path, 
     if not os.path.exists(n_samples_image_path):
         # call sub process to create 'n' samples img
         print("Creation of 'n' samples image : ", n_samples_image_path)
-        subprocess.run(["python", "reconstruct_scene_mean.py", "--scene", _scene_name, "--n", _n, "--image_name", n_samples_image_path.split('/')[-1]])
+        subprocess.run(["python", "reconstruct/reconstruct_scene_mean.py", "--scene", _scene_name, "--n", _n, "--image_name", n_samples_image_path.split('/')[-1]])
 
     if not os.path.exists(reference_image_path):
         # call sub process to create 'reference' img
         print("Creation of reference image : ", reference_image_path)
-        subprocess.run(["python", "reconstruct_scene_mean.py", "--scene", _scene_name, "--n", str(1000), "--image_name", reference_image_path.split('/')[-1]])
+        subprocess.run(["python", "reconstruct/reconstruct_scene_mean.py", "--scene", _scene_name, "--n", str(1000), "--image_name", reference_image_path.split('/')[-1]])
 
 
     # load the trained model
@@ -88,6 +91,9 @@ def write_result(_scene_name, _data_file, _model_path, _n, _reconstructed_path, 
 
     model_name = _model_path.split('/')[-1].replace('.json', '')
 
+    if not os.path.exists(cfg.results_information_folder):
+        os.makedirs(cfg.results_information_folder)
+    
     # save score into models_comparisons_keras.csv file
     with open(cfg.global_result_filepath_keras, "a") as f:
        f.write(model_name + ';' + str(len(y)) + ';' + str(coeff[0]) + ';' + str(mse_reconstructed_n_samples) + ';' + str(mse_ref_reconstructed_samples) + '\n')

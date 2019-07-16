@@ -24,7 +24,7 @@ for feature in {'variances','samples'}; do
                 if ! grep -q "${MODEL_NAME}" "${file_path}"; then
                     echo "Run computation data for model ${MODEL_NAME}"
 
-                    python make_dataset.py --n ${n} --feature ${feature} --each_row ${row} --each_column ${column}
+                    python generate/make_dataset.py --n ${n} --feature ${feature} --each_row ${row} --each_column ${column}
                 fi
 
                 for model in {"SGD","Ridge"}; do

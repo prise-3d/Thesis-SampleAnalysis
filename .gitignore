@@ -5,6 +5,7 @@ dataset
 data
 saved_models
 reconstructed
+models_info
 results
 
 results/models_comparisons.csv

@@ -1,5 +1,7 @@
+# main imports
 import os, sys, argparse
 
+# image processing imports
 from PIL import Image
 import ipfml.iqa.fr as fr
 

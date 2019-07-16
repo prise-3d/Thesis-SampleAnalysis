@@ -1,6 +1,11 @@
-from . import config as config
-
+# main imports
 import numpy as np
+import sys
+
+# config and modules imports
+sys.path.insert(0, '') # trick to enable import of main folder module
+
+import custom_config as cfg
 
 def compute_feature(feature_choice, samples):
 
