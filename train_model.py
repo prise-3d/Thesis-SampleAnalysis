@@ -63,6 +63,9 @@ def train(_data_file, _model_name):
 
     dump(clf, model_file_path)
 
+    if not os.path.exists(cfg.results_information_folder):
+        os.makedirs(cfg.results_information_folder)
+        
     # save score into global_result.csv file
     with open(cfg.global_result_filepath, "a") as f:
        f.write(model_filename.replace('.joblib', '') + ';' + str(len(y)) + ';' + str(coeff) + ';\n')
