@@ -20,9 +20,12 @@ for feature in {'variances','samples'}; do
 
                 # Run creation of dataset and train model
                 DATASET_NAME="data/dataset_${n}_${feature}_column_${column}_row_${row}.csv"
+                DATA_INFO="${n}_${feature}_column_${column}_row_${row}"
 
-                if ! grep -q "${MODEL_NAME}" "${file_path}"; then
-                    echo "Run computation data for model ${MODEL_NAME}"
+                if grep -q "${DATA_INFO}" "${file_path}"; then
+                    echo "data already generated..."
+                else
+                    echo "Run computation data ${DATA_INFO}"
 
                     python generate/make_dataset.py --n ${n} --feature ${feature} --each_row ${row} --each_column ${column}
                 fi
