@@ -15,18 +15,18 @@ fi
 
 for feature in {'variances','samples'}; do
     for n in {3,4,5,6,7,8,9,10,15,20,25,30}; do
-    #for row in {1,2,3,4,5}; do
-    #    for column in {1,2,3,4,5}; do
-    
-    for row in {4,5}; do
-        for column in {4,5}; do
+        for row in {1,2,3,4,5}; do
+            for column in {1,2,3,4,5}; do
 
                 # Run creation of dataset and train model
                 DATASET_NAME="data/dataset_${n}_${feature}_column_${column}_row_${row}.csv"
                 MODEL_NAME="${n}_${feature}_column_${column}_row_${row}"
                 IMAGE_RECONSTRUCTED="Sponza1_${n}_${feature}_${row}_${column}.png"
+                DATA_INFO="${n}_${feature}_column_${column}_row_${row}"
 
-                if ! grep -q "${MODEL_NAME}" "${file_path}"; then
+                if grep -q "${MODEL_NAME}" "${file_path}"; then
+                    echo "${MODEL_NAME} results already computed.."
+                else
                     echo "Run computation for model ${MODEL_NAME}"
 
                     # Already computed..
@@ -36,8 +36,6 @@ for feature in {'variances','samples'}; do
                     # TODO : Add of reconstruct process for image ?
                     python reconstruct/reconstruct_keras.py --n ${n} --feature ${feature} --model_path saved_models/${MODEL_NAME}.json --scene Sponza1 --image_name ${IMAGE_RECONSTRUCTED}
                     python others/write_result_keras.py --n ${n} --model_path saved_models/${MODEL_NAME}.json --scene Sponza1 --image_path reconstructed/${IMAGE_RECONSTRUCTED} --data ${DATASET_NAME} --iqa mse &
-                else
-                    echo "${MODEL_NAME} results already computed.."
                 fi
             done
         done
