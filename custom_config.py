@@ -29,7 +29,7 @@ folder_and_files_filtered       = ["analyse", "make_dataset.py", ".vscode"]
 
 number_of_rows                  = 512
 number_of_columns               = 512
-keras_epochs                    = 5
+keras_epochs                    = 100
 
 kind_of_models                  = ["SGD", "Ridge", "SVR"]
 
